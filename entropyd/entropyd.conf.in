@@ -2,5 +2,6 @@
 	"listen": [
 		":3344"
 	],
-	"key": ""
+	"key": "",
+	"watermark": 1024
 }

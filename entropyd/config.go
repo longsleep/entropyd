@@ -10,8 +10,9 @@ import (
 )
 
 type Config struct {
-	Listen []string `json:"listen"`
-	Key    string   `json:"key"`
+	Listen    []string `json:"listen"`
+	Key       string   `json:"key"`
+	Watermark int      `json:"watermark"`
 }
 
 func LoadConfig(fn string) (*Config, error) {

@@ -6,13 +6,16 @@ package entropyd
 
 import (
 	"crypto/rand"
+	"fmt"
 	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 )
 
 const (
 	PoolSizeProcFs   = "/proc/sys/kernel/random/poolsize"
+	WatermarkProcFs  = "/proc/sys/kernel/random/write_wakeup_threshold"
 	BaseContentType  = "application/x-entropy"
 	NonceContentType = "application/x-entropy-nonce"
 )
@@ -41,4 +44,15 @@ func (entropy *Entropy) GetPoolSize() (int, error) {
 	}
 
 	return poolSize, nil
+}
+
+func (entropy *Entropy) SetWatermark(level int) error {
+	fd, err := os.OpenFile(WatermarkProcFs, os.O_WRONLY, 0)
+	if err != nil {
+		return err
+	}
+	defer fd.Close()
+
+	_, err = fd.WriteString(fmt.Sprintf("%d\n", level))
+	return err
 }
