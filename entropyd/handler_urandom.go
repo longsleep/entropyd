@@ -14,7 +14,7 @@ import (
 	"github.com/longsleep/entropyd"
 )
 
-func (api *API) UrandomHandler(config *API, w http.ResponseWriter, r *http.Request) error {
+func UrandomHandler(api *API, w http.ResponseWriter, r *http.Request) error {
 	r.ParseForm()
 
 	var err error
@@ -39,7 +39,7 @@ func (api *API) UrandomHandler(config *API, w http.ResponseWriter, r *http.Reque
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return nil
 		}
-		if len(nonce) != api.client.NonceSize() {
+		if len(nonce) != api.Client.NonceSize() {
 			http.Error(w, "invalid nonce size", http.StatusBadRequest)
 			return nil
 		}
@@ -49,14 +49,14 @@ func (api *API) UrandomHandler(config *API, w http.ResponseWriter, r *http.Reque
 	}
 
 	b := make([]byte, length)
-	err = api.entropy.Urandom(b)
+	err = api.Entropy.Urandom(b)
 	if err != nil {
 		return err
 	}
 
-	c := api.client.Encrypt(nonce, b)
+	c := api.Client.Encrypt(nonce, b)
 
-	w.Header().Set("Content-Type", fmt.Sprintf("%s-%s", entropyd.BaseContentType, api.client))
+	w.Header().Set("Content-Type", fmt.Sprintf("%s-%s", entropyd.BaseContentType, api.Client))
 	w.Write(c)
 
 	log.Printf("providing %d bytes to %v", length, r.RemoteAddr)

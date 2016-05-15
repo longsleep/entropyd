@@ -32,9 +32,9 @@ func main() {
 	}
 
 	entropy := entropyd.NewEntropy()
-	api := &API{client, entropy}
+	api := &API{config, client, entropy}
 
-	http.Handle("/entropy/urandom", &APIHandler{api, api.UrandomHandler})
+	http.Handle("/entropy/urandom", &APIHandler{api, UrandomHandler})
 
 	wg := sync.WaitGroup{}
 	for _, listener := range config.Listen {

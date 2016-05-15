@@ -9,8 +9,9 @@ import (
 )
 
 type API struct {
-	client  *entropyd.Client
-	entropy *entropyd.Entropy
+	Config  *Config
+	Client  *entropyd.Client
+	Entropy *entropyd.Entropy
 }
 
 type APIError interface {
