@@ -28,7 +28,7 @@ func NewHTTPClient(key []byte, uri string) (*HTTPClient, error) {
 func (c *HTTPClient) NewUrandomRequest(length int, nonce []byte) (*http.Request, error) {
 	uri := fmt.Sprintf("%s/entropy/urandom", c.uri)
 
-	req, err := http.NewRequest(http.MethodPost, uri, bytes.NewReader(nonce))
+	req, err := http.NewRequest("POST", uri, bytes.NewReader(nonce))
 	if err != nil {
 		return nil, err
 	}
