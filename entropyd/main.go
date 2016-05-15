@@ -32,13 +32,6 @@ func main() {
 	}
 
 	entropy := entropyd.NewEntropy()
-	if config.Watermark > 0 {
-		err = entropy.SetWatermark(config.Watermark)
-		if err != nil {
-			log.Fatal("failed to set watermark: ", err)
-		}
-	}
-
 	api := &API{config, client, entropy}
 
 	http.Handle("/entropy/urandom", &APIHandler{api, UrandomHandler})

@@ -40,8 +40,17 @@ func main() {
 		log.Fatal("failed to open random device: ", err)
 	}
 
-	// Get Kernel entropy pool size.
 	entropy := entropyd.NewEntropy()
+
+	// Set Kernel entropy watermark.
+	if config.Watermark > 0 {
+		err = entropy.SetWatermark(config.Watermark)
+		if err != nil {
+			log.Fatal("failed to set watermark: ", err)
+		}
+	}
+
+	// Get Kernel entropy pool size.
 	poolSize, err := entropy.GetPoolSize()
 	if err != nil {
 		log.Fatal("failed to get entropy pool size: ", err)
