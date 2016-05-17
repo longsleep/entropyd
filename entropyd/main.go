@@ -32,7 +32,7 @@ func main() {
 	}
 
 	entropy := entropyd.NewEntropy()
-	api := &API{config, client, entropy}
+	api := NewAPI(config, client, entropy)
 
 	http.Handle("/entropy/urandom", &APIHandler{api, UrandomHandler})
 

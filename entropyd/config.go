@@ -12,6 +12,7 @@ import (
 type Config struct {
 	Listen []string `json:"listen"`
 	Key    string   `json:"key"`
+	Allow  []string `json:"allow"`
 }
 
 func LoadConfig(fn string) (*Config, error) {

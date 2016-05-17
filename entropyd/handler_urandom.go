@@ -15,9 +15,13 @@ import (
 )
 
 func UrandomHandler(api *API, w http.ResponseWriter, r *http.Request) error {
-	r.ParseForm()
+	err := api.ValidateRequest(r)
+	if err != nil {
+		http.Error(w, "address not allowed", http.StatusForbidden)
+		return nil
+	}
 
-	var err error
+	r.ParseForm()
 
 	length := 64
 	if lengthString := r.Form.Get("length"); lengthString != "" {
